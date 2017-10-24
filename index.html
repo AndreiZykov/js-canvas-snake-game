@@ -228,26 +228,33 @@
                  
                     case LEFT:
                         nx--;
+                        if(nx < 0)
+                            nx = grid.width-1;
                         break;
                     case UP:
                         ny++;
+                        if(ny > grid.height)
+                            ny = 0;
                         break;
                     case RIGHT:
                         nx++;
+                        if(nx > grid.width-1)
+                            nx = 0;
                         break;
                     case DOWN:
                         ny--;
+                        if(ny < 0)
+                            ny = grid.height;
                         break;
                 }
                 
                 
                 
-                if (nx < 0 || nx > grid.width-1||
-                    ny < 0 || ny > grid.height-1||
-                   grid.get(nx,ny) === SNAKE){
-                 
-                    return init();
-                    
+                console.log(nx + " : "+ ny);
+                
+                
+                if (grid.get(nx,ny) === SNAKE){
+                    return init();    
                 }
                 
                 if (grid.get(nx,ny) === FRUIT) {
@@ -259,12 +266,10 @@
                     setFood();
                     
                 } else {
-                
-                var tail = snake.remove();
-                grid.set(EMPTY,tail.x, tail.y);
-                tail.x = nx;
-                tail.y = ny;
-               
+                    var tail = snake.remove();
+                    grid.set(EMPTY,tail.x, tail.y);
+                    tail.x = nx;
+                    tail.y = ny;
                 }
 
                 grid.set(SNAKE, tail.x, tail.y);
